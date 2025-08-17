@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Una Sorpresa para Ti</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="icono/amor.png" type="image/png">
+</head>
+<body>
+    <!-- Sección Superior: Carta -->
+    <div class="letter-section">
+        <div id="container" class="container">
+            <div id="instruction">Toca el sobre para abrirlo</div>
+            <div id="envelope" class="envelope">
+                <div class="flap"></div>
+                <div class="body"></div>
+                <div class="seal"></div>
+            </div>
+            <div id="letter" class="letter">
+                <div id="close-letter" class="close-btn">&times;</div>
+                <h4>Para Mi Amor,<br>17/08/25</h4>
+                <div id="letter-content">
+                    <p id="letter-main-text"></p>
+                    <p id="letter-signature" style="opacity: 0; transition: opacity 1s ease 1s;">
+                        Con todo mi amor,<br>Tu peluchito
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-prompt">sigue bajando amor</div>
+    </div>
+
+    <!-- Sección Inferior: Galería -->
+    <div id="gallery-wrapper">
+        <h2 class="gallery-title">Algunas de nuestras fotitos juntos</h2>
+        <div id="gallery">
+            <img src="./fotos/feoslos2.jpg" alt="Recuerdo 1" class="thumbnail">
+            <img src="./fotos/distraida.jpg" alt="Recuerdo 2" class="thumbnail">
+            <img src="./fotos/kamiladespierta.jpg" alt="Recuerdo 5" class="thumbnail">
+            <!-- <img src="./fotos/juntos1.jpg" alt="Recuerdo 6" class="thumbnail"> -->
+            <img src="./fotos/juntos2.jpg" alt="Recuerdo 7" class="thumbnail">
+            <img src="./fotos/micarta.jpg" alt="Recuerdo 8" class="thumbnail">
+            <img src="./fotos/kamilachiquita.jpg" alt="Recuerdo 9   " class="thumbnail">
+            <img src="./fotos/fotico1.jpg" alt="Recuerdo 10   " class="thumbnail">
+            <img src="./fotos/fotico2.jpg" alt="Recuerdo 11   " class="thumbnail">
+            <!-- Miniaturas de Vídeo -->
+            <div class="video-thumbnail" data-video-src="video1.mp4">
+                <img src="./fotos/Captura de pantalla (1).png" alt="Portada Video 1">
+                <span class="play-icon"></span>
+            </div>
+            <div class="video-thumbnail" data-video-src="video2.mp4">
+                <img src="./fotos/Captura de pantalla (2).png" alt="Portada Video 2">
+                <span class="play-icon"></span>
+            </div>
+             <div class="video-thumbnail" data-video-src="video3.mp4">
+                <img src="./fotos/Captura de pantalla (3).png" alt="Portada Video 2">
+                <span class="play-icon"></span>
+            </div>
+             <div class="video-thumbnail" data-video-src="video4.mp4">
+                <img src="./fotos/Captura de pantalla (4).png" alt="Portada Video 2">
+                <span class="play-icon"></span>
+            </div>
+
+
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+    <!-- Lightbox para ver la foto en grande -->
+    <div id="lightbox" class="hidden">
+        <span id="close-lightbox">&times;</span>
+        <img id="lightbox-image" src="" alt="Foto en grande">
+        <video id="lightbox-video" src="" controls></video>
+    </div>
+
+    <!-- Sección del Contador Regresivo -->
+    <div id="countdown-section">
+        <h2>Cumplimos 2 mesesitos en</h2>
+        <div id="countdown-timer">
+            <div><span id="days">0</span> Días</div>
+            <div><span id="hours">0</span> Horas</div>
+            <div><span id="minutes">0</span> Minutos</div>
+            <div><span id="seconds">0</span> Segundos</div>
+        </div>
+    </div>
+
+    <!-- Footer Romántico -->
+    <footer>
+        <p>Hecho con amor por Tu peluche para Mi peluchita ❤️</p>
+    </footer>
+</body>
+</html>

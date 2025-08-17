@@ -1,0 +1,514 @@
+body {
+    font-family: 'Georgia', serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4b6c2; /* Un rosa más vibrante y bonito */
+    display: flex; /* Usamos flexbox para organizar las secciones */
+    flex-direction: column; /* Las apilamos verticalmente */
+    min-height: 100vh; /* Asegura que el body tenga al menos el alto de la pantalla */
+}
+
+
+
+/* --- Sección Superior (Carta) --- */
+.letter-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ocupa toda la pantalla inicial */
+    position: relative;
+    flex-shrink: 0; /* Evita que se encoja */
+}
+
+.scroll-prompt {
+    position: absolute;
+    bottom: 20px;
+    color: #d16055;
+    font-size: 18px;
+    font-weight: bold;
+    animation: bounce 2s infinite;
+    opacity: 0; /* Oculto por defecto */
+    transition: opacity 1s ease-in-out; /* Transición para aparecer */
+}
+
+.scroll-prompt.visible {
+    opacity: 1; /* Clase para hacerlo visible */
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-20px);
+    }
+    60% {
+        transform: translateY(-10px);
+    }
+}
+
+.container {
+    position: relative;
+    perspective: 1000px;
+}
+
+/* --- Instrucción --- */
+#instruction {
+    position: absolute;
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #d16055;
+    font-size: 22px;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    z-index: 100;
+    transition: opacity 0.5s ease;
+}
+
+/* --- Sobre --- */
+.envelope {
+    position: relative;
+    width: 400px;
+    height: 275px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    z-index: 10;
+    transition: all 0.5s ease-in-out;
+}
+
+.container:not(.open) .envelope:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 15px 25px rgba(0,0,0,0.15);
+    cursor: pointer;
+}
+
+.flap {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 200px solid transparent;
+    border-right: 200px solid transparent;
+    border-top: 138px solid #f5f5f5;
+    top: 0;
+    left: 0;
+    transform-origin: top;
+    z-index: 2;
+    transition: transform 0.4s ease-in-out;
+}
+
+.body {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.envelope .body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0px 4px 10px rgba(0,0,0,0.15);
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    transition-delay: 0.4s;
+}
+
+.container.open .envelope .body::before {
+    opacity: 1;
+}
+
+.seal {
+    position: absolute;
+    top: 120px;
+    left: 50%;
+    margin-left: -20px;
+    width: 40px;
+    height: 40px;
+    background: #c0392b;
+    transform: rotate(45deg);
+    z-index: 3;
+    transition: all 0.4s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3); /* Sombra más pronunciada */
+}
+
+.seal::before,
+.seal::after {
+    content: "";
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: inherit;
+}
+
+.seal::before {
+    top: -20px;
+    left: 0;
+}
+
+.seal::after {
+    top: 0;
+    left: -20px;
+}
+
+/* --- Carta --- */
+.letter {
+    position: absolute;
+    top: 0;
+    left: 10px;
+    width: 380px;
+    height: 255px;
+    background-color: #fff8f8;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    text-align: center;
+    z-index: 5;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: transform 0.6s ease-in-out, opacity 0.4s ease-in, z-index 0s 0.6s;
+    overflow-y: auto;
+}
+
+/* --- Estado Abierto --- */
+.container.open #instruction {
+    opacity: 0;
+}
+
+.container.open .flap {
+    transform: rotateX(180deg);
+}
+
+.container.open .seal {
+    opacity: 0;
+    transform: rotate(45deg) translateY(-10px);
+}
+
+.container.open .envelope {
+    border-color: #e6c670;
+    transform: translateY(50px); /* Movimiento más sutil */
+}
+
+.container.open .letter {
+    transform: translateY(-170px); /* Ajustado a la nueva posición del sobre */
+    opacity: 1;
+    z-index: 20;
+    transition-delay: 0.2s;
+}
+
+/* --- Botón de Cierre --- */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    color: #aaa;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s 0.8s, color 0.3s;
+}
+
+.container.open .close-btn {
+    opacity: 1;
+}
+
+.close-btn:hover {
+    color: #333;
+}
+
+/* --- Estilos del texto de la carta --- */
+.letter h4 {
+    margin-top: 0;
+    color: #c0392b;
+    font-size: 22px;
+}
+
+.letter p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #555;
+    text-align: left;
+}
+
+.cursor {
+    display: inline-block;
+    width: 2px;
+    height: 20px;
+    background-color: #555;
+    margin-left: 5px;
+    animation: blink 1s infinite;
+}
+
+/* --- Sección de la Galería --- */
+#gallery-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* Quitamos la altura fija para un flujo más natural */
+    background-color: transparent;
+    padding: 150px 20px; /* Aumentamos el padding para crear margen visual */
+    box-sizing: border-box;
+    position: relative; /* Asegura el correcto apilamiento de secciones */
+}
+
+.gallery-title {
+    color: #c0392b;
+    font-size: 28px;
+    font-family: 'Georgia', serif;
+    margin-bottom: 30px;
+}
+
+#gallery {
+    display: grid;
+    grid-template-columns: repeat(4, 130px); /* 4 columnas en escritorio */
+    gap: 20px;
+    justify-content: center;
+}
+
+.thumbnail {
+    aspect-ratio: 1 / 1; /* Proporción cuadrada */
+    border-radius: 12px;
+    border: 4px solid white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    cursor: pointer;
+    object-fit: cover;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%; /* Ocupa el espacio de la celda */
+}
+
+.thumbnail:hover {
+    transform: scale(1.05); /* Un hover más sutil para la cuadrícula */
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}
+
+/* --- Estilos para Miniaturas de Vídeo --- */
+.video-thumbnail {
+    aspect-ratio: 1 / 1;
+    position: relative;
+    cursor: pointer;
+    width: 100%;
+}
+
+.video-thumbnail img {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    border: 4px solid white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    object-fit: cover;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.video-thumbnail:hover img {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}
+
+.play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    transition: background-color 0.3s ease;
+    pointer-events: none;
+}
+
+.play-icon::after { /* El triángulo de play */
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 18px solid white;
+    margin-left: 5px;
+}
+
+.video-thumbnail:hover .play-icon {
+    background-color: rgba(208, 52, 42, 0.8);
+}
+
+/* --- Lightbox (Ventana emergente) --- */
+#lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 1;
+    transition: opacity 0.4s ease;
+}
+
+#lightbox.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+#lightbox-image,
+#lightbox-video {
+    max-width: 80vw;
+    max-height: 80vh;
+    border: 5px solid white;
+    border-radius: 10px;
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
+    display: none; /* Ocultos por defecto */
+}
+
+#close-lightbox {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    color: white;
+    font-size: 48px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+#close-lightbox:hover {
+    color: #ff7b7b;
+}
+
+/* --- Estilos Responsivos para Móviles --- */
+@media (max-width: 600px) {
+    /* Ajuste para la instrucción */
+    #instruction {
+        top: -60px;
+    }
+
+    /* Ajustes para el Sobre y la Carta */
+    .envelope {
+        width: 320px;
+        height: 220px; /* Mantenemos la proporción */
+    }
+
+    .flap {
+        border-left-width: 160px;
+        border-right-width: 160px;
+        border-top-width: 110px;
+    }
+
+    .seal {
+        top: 95px;
+        width: 35px;
+        height: 35px;
+    }
+
+    .seal::before,
+    .seal::after {
+        width: 35px;
+        height: 35px;
+    }
+
+    .seal::before {
+        top: -17.5px;
+    }
+
+    .seal::after {
+        left: -17.5px;
+    }
+
+    .letter {
+        width: 300px;
+        height: 200px;
+    }
+
+    /* Animaciones más sutiles para móvil */
+    .container.open .envelope {
+        transform: translateY(50px);
+    }
+
+    .container.open .letter {
+        transform: translateY(-110px);
+    }
+
+    /* Ajustes para la Galería */
+    .gallery-title {
+        font-size: 24px;
+        margin-bottom: 20px; /* Margen reducido */
+    }
+
+    #gallery {
+        display: grid; /* Aseguramos que se mantenga como grid */
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas fluidas */
+        gap: 15px;
+        width: 100%;
+        padding: 0 20px; /* Padding para que no pegue a los bordes */
+        box-sizing: border-box;
+    }
+
+    .scroll-prompt {
+        font-size: 16px;
+    }
+}
+
+/* --- Sección del Contador Regresivo --- */
+#countdown-section {
+    display: flex; /* Usamos flexbox para centrar el contenido */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 90vh; /* Ocupa el 90% del alto de la pantalla */
+    padding: 20px; /* Ajustamos el padding */
+    text-align: center;
+    background-color: #f9d1d1; /* Un color diferente para esta sección */
+    color: #c0392b;
+    box-sizing: border-box; /* Para que el padding no afecte al alto total */
+}
+
+#countdown-section h2 {
+    font-size: 32px;
+    margin-bottom: 40px;
+    font-family: 'Georgia', serif;
+}
+
+#countdown-timer {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap; /* Para que se ajuste en móviles */
+}
+
+#countdown-timer > div {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 100px; /* Para que no se encoja demasiado */
+}
+
+#countdown-timer span {
+    font-size: 48px;
+    color: #d16055;
+    margin-bottom: 5px;
+}
+
