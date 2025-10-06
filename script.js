@@ -101,7 +101,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 30000);
 
     // --- Lógica del Contador Regresivo ---
+<<<<<<< HEAD
     const countdownDate = new Date("2025-09-17T00:00:00").getTime();
+=======
+    const countdownDate = new Date("2025-10-17T00:00:00").getTime();
+>>>>>>> b5c1e4d (Actualizacion de contador)
 
     const daysSpan = document.getElementById('days');
     const hoursSpan = document.getElementById('hours');
@@ -114,7 +118,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (distance < 0) {
             clearInterval(countdownInterval);
+<<<<<<< HEAD
             document.getElementById('countdown-timer').innerHTML = "¡Felices 2 meses, mi amor!";
+=======
+            document.getElementById('countdown-timer').innerHTML = "¡Felices 3 meses, mi amor!";
+>>>>>>> b5c1e4d (Actualizacion de contador)
             return;
         }
 
